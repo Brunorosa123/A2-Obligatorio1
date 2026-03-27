@@ -1,7 +1,6 @@
-#include <cassert>
 #include <string>
 #include <iostream>
-#include <limits>
+#include "./tads/hashClosedImp.cpp"
 
 using namespace std;
 
@@ -12,7 +11,7 @@ int main()
     tabla t = crearTabla(n);
     int pedir = 0;
     string datos;
-    cin >> datos >> endln;
+    cin >> datos;
     for (int i = 0; i < datos.length(); i++)
     {
         if (i % 2 == 0)
