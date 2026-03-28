@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "./tads/hashClosedImp.cpp"
+#include "./tads/HashClosedImp.cpp"
 
 using namespace std;
 
