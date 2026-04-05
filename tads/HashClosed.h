@@ -1,18 +1,19 @@
 class HashClosed {
-public:
-    // pre: -
-    // post: creates a hash table with the given size
-    virtual void crearTabla(int tam) = 0;
+    public:
 
-    // pre: -
-    // post: inserts the given key into the hash table
-    virtual void insertar(char key) = 0;
+        //pre: tamaño mayor a 0
+        //post: devuelve una tabla hash cerrada vacía
+        tabla crearTabla(int tam);
 
-    // pre: -
-    // post: returns the quantity of the given key in the hash table
-    virtual int buscar(char key) = 0;
+        //pre: tamaño mayor a 0
+        //post: inserta la clave con su valor, o aumenta el valor si la clave ya existe
+        void insertar(tabla t, char key);
 
-    // pre: -
-    // post: removes one occurrence of the given key from the hash table
-    virtual void eliminar(char key) = 0;
+        //pre: la clave debe existir en la tabla
+        //post: devuelve la cantidad asociada a la clave
+        int buscar(tabla t, char key);
+
+        //pre: la clave debe existir en la tabla
+        //post: decrece el valor asociado a la clave
+        void eliminar(tabla t, char key);
 };
