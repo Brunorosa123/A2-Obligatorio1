@@ -20,7 +20,7 @@ int main()
         cin >> names[i] >> scores[i];
     }
 
-    tabla2 t = crearTabla2(n);
+    tabla2 t = crearTabla2(n * 2 + 1);
 
     for (int i = 0; i < n; i++) {
         insertar2(t, names[i], scores[i]);
@@ -29,7 +29,7 @@ int main()
     int maxScore = getMax(t);
 
 
-    tabla2 t2 = crearTabla2(n);
+    tabla2 t2 = crearTabla2(n * 2 + 1);
 
     for (int i = 0; i < n; i++) {
         insertar2(t2, names[i], scores[i]);

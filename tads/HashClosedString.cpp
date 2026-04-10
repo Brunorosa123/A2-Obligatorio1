@@ -1,6 +1,8 @@
 #include "HashClosedString.h"
 #include <cctype>
 #include <string>
+#include <climits>
+
 
 struct NodoStr{
     std::string clave;
@@ -23,9 +25,9 @@ int hash1(std::string key, int tam) {
 }
 
 int hash2(std::string key, int tam) {
-    int h = 0;
-    for (int i = 0; i < key.length(); i++)
-        h = (h * 37 + key[i]) % tam;
+     int h = 0; 
+     for (int i = 0; i < key.length(); i++) 
+        h = (h * 37 + key[i]) % tam; 
     return (h % (tam - 1)) + 1; 
 }
 
@@ -69,18 +71,15 @@ int buscarPuntaje(tabla2 t, std::string key) {
     for (int i = 0; i < t->tam; i++) {
         int pos = (h1 + i * h2) % t->tam;
 
-        if (!t->array[pos].ocupado) return 0;
-
-        if (t->array[pos].clave == key) {
+        if (t->array[pos].ocupado && t->array[pos].clave == key) {
             return t->array[pos].puntaje;
         }
     }
     return 0;
 }
 
-
 int getMax(tabla2 t) {
-    int max = 0;
+    int max = INT_MIN;
     for (int i = 0; i < t->tam; i++) {
         if (t->array[i].ocupado && t->array[i].puntaje > max)
             max = t->array[i].puntaje;
