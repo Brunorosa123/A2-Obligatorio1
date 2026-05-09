@@ -58,7 +58,7 @@ void insertar2(tabla2 t, std::string key, int score) {
         }
 
         if (t->array[index].clave == key) {
-            t->array[index].puntaje += score;
+            t->array[index].puntaje = score;
             return;
         }
     }
@@ -76,6 +76,20 @@ int buscarPuntaje(tabla2 t, std::string key) {
         }
     }
     return 0;
+}
+
+int getindex(tabla2 t, std::string key) {
+    int h1 = hash1(key, t->tam);
+    int h2 = hash2(key, t->tam);
+
+    for (int i = 0; i < t->tam; i++) {
+        int pos = (h1 + i * h2) % t->tam;
+
+        if (t->array[pos].ocupado && t->array[pos].clave == key) {
+            return pos;
+        }
+    }
+    return -1;
 }
 
 int getMax(tabla2 t) {

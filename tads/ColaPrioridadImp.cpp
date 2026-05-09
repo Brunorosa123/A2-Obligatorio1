@@ -95,6 +95,7 @@ void insertar(NodoCola nodo, ColaPrio cp)
     flotar(cp, cp->primerolibre);
     cp->primerolibre++;
 }
+
 NodoCola eliminar(ColaPrio cp)
 {
     assert(cp->primerolibre > 1);
