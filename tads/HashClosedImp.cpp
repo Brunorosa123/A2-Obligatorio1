@@ -1,4 +1,3 @@
-#include "HashClosed.h"
 #include <cctype>
 #include <string>
 

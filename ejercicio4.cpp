@@ -44,13 +44,22 @@ int main()
     }
     cin >> desde >> hasta;
 
+    int indiceOrigen = buscarPuntaje(t, desde);
+    int indiceDestino = buscarPuntaje(t, hasta);
+
+    if (indiceOrigen == 0 || indiceDestino == 0) {
+        cout << -1 << endl;
+        delete[] origen;
+        delete[] destino;
+        delete[] peso;
+        return 0;
+    }
+
     int *costos = new int[n + 1];
     int *vengoDe = new int[n + 1];
     bool *visitados = new bool[n + 1];
 
     grafo->RellenarVec(costos, vengoDe, visitados, n);
-    int indiceOrigen = buscarPuntaje(t, desde);
-    int indiceDestino = buscarPuntaje(t, hasta);
     costos[indiceOrigen] = 0;
 
     MinHeap *h = new MinHeap(n * n);

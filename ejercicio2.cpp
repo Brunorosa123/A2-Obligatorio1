@@ -20,23 +20,23 @@ int main()
         cin >> names[i] >> scores[i];
     }
 
+    // First pass: accumulate final scores per player
     tabla2 t = crearTabla2(n * 2 + 1);
-
     for (int i = 0; i < n; i++) {
-        insertar2(t, names[i], scores[i]);
+        int prev = buscarPuntaje(t, names[i]);
+        insertar2(t, names[i], prev + scores[i]);
     }
 
     int maxScore = getMax(t);
 
-
+    // Second pass: find who first reached maxScore (among finalists)
     tabla2 t2 = crearTabla2(n * 2 + 1);
-
     for (int i = 0; i < n; i++) {
-        insertar2(t2, names[i], scores[i]);
+        int prev = buscarPuntaje(t2, names[i]);
+        insertar2(t2, names[i], prev + scores[i]);
 
         if (buscarPuntaje(t, names[i]) == maxScore &&
             buscarPuntaje(t2, names[i]) >= maxScore) {
-            
             cout << names[i] << endl;
             break;
         }
