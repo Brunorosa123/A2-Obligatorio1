@@ -176,13 +176,11 @@ bool resolver(Punto *puntos, int inicio, int fin, long long D)
     int medio = inicio + (fin - inicio) / 2;
     long long xMedio = puntos[medio].x;
 
-    // Conquistar izquierda
     if (resolver(puntos, inicio, medio, D))
     {
         return true;
     }
 
-    // Conquistar derecha
     if (resolver(puntos, medio + 1, fin, D))
     {
         return true;
@@ -240,7 +238,6 @@ bool existeParCritico(Punto *puntos, int N, long long D)
 
     Punto *aux = new Punto[N];
 
-    // Primero ordenamos por X, como indica el pseudocódigo.
     mergeSortX(puntos, aux, 0, N - 1);
 
     delete[] aux;

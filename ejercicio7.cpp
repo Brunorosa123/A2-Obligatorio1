@@ -54,7 +54,7 @@ void merge(Competidor* arr, Competidor* aux, int inicio, int mitad, int fin) {
     }
 }
 
-void mergeSort(Competidor *array, Competidor *aux, int inicio, int fin)//nos basamos en las ppts y lo adaptamos a nuestro problema, el algoritmo es el mismo pero con la condicion de ordenamiento que nos piden en el ejercicio, tambien lo que dio en clase el profe
+void mergeSort(Competidor *array, Competidor *aux, int inicio, int fin)
 {
     if (EsSolucionTrivial(inicio, fin))
     {
