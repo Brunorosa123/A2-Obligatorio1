@@ -63,7 +63,7 @@ string GreedySol(Letra *letras, int N, int maxf){
     int ultima = -1;
 
     for(int pos = 0; pos < N; pos++){
-        bool placed = false;
+        bool agregado = false;
         for(int i = 25; i >= 0; i--){
             if(letras[i].frecuencia > 0 && i != ultima){
                 letras[i].frecuencia--;
@@ -71,13 +71,13 @@ string GreedySol(Letra *letras, int N, int maxf){
                 if(sePuedeCompletar(letras, restantes, i)){
                     result += letras[i].letra;
                     ultima = i;
-                    placed = true;
+                    agregado = true;
                     break;
                 }
                 letras[i].frecuencia++;
             }
         }
-        if(!placed){
+        if(!agregado){
             return "Imposible";
         }
     }
