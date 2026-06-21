@@ -54,12 +54,35 @@ bool sePuedeCompletar(Letra* letras, int restantes, int ultima){
     return true;
 }
 
-string GreedySol(Letra *letras,int N, int maxf){
-    
+string GreedySol(Letra *letras, int N, int maxf){
     if((N + 1) / 2 < maxf){
         return "Imposible";
     }
 
+    string result = "";
+    int ultima = -1;
+
+    for(int pos = 0; pos < N; pos++){
+        bool placed = false;
+        for(int i = 25; i >= 0; i--){
+            if(letras[i].frecuencia > 0 && i != ultima){
+                letras[i].frecuencia--;
+                int restantes = N - pos - 1;
+                if(sePuedeCompletar(letras, restantes, i)){
+                    result += letras[i].letra;
+                    ultima = i;
+                    placed = true;
+                    break;
+                }
+                letras[i].frecuencia++;
+            }
+        }
+        if(!placed){
+            return "Imposible";
+        }
+    }
+
+    return result;
 }
 
 int main()
