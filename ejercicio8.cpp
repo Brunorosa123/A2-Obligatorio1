@@ -10,8 +10,6 @@ char letra;
 int frecuencia;
 };
 
-
-
 Letra* guardarLetras(string S){
     Letra * letras = new Letra[26];
 

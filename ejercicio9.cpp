@@ -21,8 +21,13 @@ struct Estado {
 };
 
 bool mejorEstado(Estado a, Estado b) {
-    if (a.valor != b.valor) return a.valor > b.valor;
-    if (a.peso != b.peso) return a.peso < b.peso;
+    if (a.valor != b.valor){
+    return a.valor > b.valor;
+    }
+    if (a.peso != b.peso) 
+    {
+        return a.peso < b.peso;
+    }
     return a.cantidad < b.cantidad;
 }
 

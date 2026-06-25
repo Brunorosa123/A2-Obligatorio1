@@ -14,7 +14,6 @@ bool esValida(int resultado) {
 
 void aplicarOperacion(int nums[], int &n, int i, int j, int resultado) {
     nums[i] = resultado;
-    // mover el ultimo al lugar de j para "eliminarlo"
     nums[j] = nums[n - 1];
     n--;
 }

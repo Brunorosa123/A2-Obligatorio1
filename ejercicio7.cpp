@@ -18,10 +18,11 @@ bool EsSolucionTrivial(int inicio, int fin)
 
 bool EsPrimero(Competidor a, Competidor b)
 {
-    if (a.tiempototal < b.tiempototal)
-        return true;
-    if (a.tiempototal > b.tiempototal)
+    if (a.tiempototal < b.tiempototal){
+        return true;}
+    if (a.tiempototal > b.tiempototal){
         return false;
+    }
 
     return a.pos < b.pos;
 }
@@ -89,7 +90,6 @@ int main()
 
     Competidor *competidores = new Competidor[L];
     Competidor *aux = new Competidor[L];
-
     int tiempo;
 
     for (int i = 0; i < L; i++)

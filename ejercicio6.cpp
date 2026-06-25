@@ -1,275 +1,184 @@
-#include <cassert>
-#include <string>
 #include <iostream>
-#include <limits>
 
 using namespace std;
 
-struct Punto
-{
+struct Punto {
     long long x;
     long long y;
+    int id; 
 };
 
-bool calcularDistancia(Punto *puntos, int i, int f, long long D)
-{
-    long long dx = puntos[f].x - puntos[i].x;
-    long long dy = puntos[f].y - puntos[i].y;
-
-    long long distanciaCuadrada = dx * dx + dy * dy;
-    long long dCuadrado = D * D;
-
-    return distanciaCuadrada <= dCuadrado;
-}
-
-long long valorAbsoluto(long long valor)
-{
+long long valorAbsoluto(long long valor) {
     return (valor < 0) ? -valor : valor;
 }
 
-bool vaAntesX(Punto a, Punto b)
-{
-    if (a.x < b.x)
-        return true;
-    if (a.x > b.x)
-        return false;
-
-    return a.y < b.y;
+bool esMenorOIgualX(Punto p1, Punto p2) {
+    return (p1.x < p2.x) || (p1.x == p2.x && p1.y <= p2.y);
 }
 
-bool vaAntesY(Punto a, Punto b)
-{
-    if (a.y < b.y)
-        return true;
-    if (a.y > b.y)
-        return false;
-
-    return a.x < b.x;
+bool esMenorOIgualY(Punto p1, Punto p2) {
+    return (p1.y < p2.y) || (p1.y == p2.y && p1.x <= p2.x);
 }
 
-void mergeX(Punto *arr, Punto *aux, int inicio, int medio, int fin)
-{
-    int i = inicio;
-    int j = medio + 1;
-    int k = inicio;
-
-    while (i <= medio && j <= fin)
-    {
-        if (vaAntesX(arr[i], arr[j]))
-        {
-            aux[k] = arr[i];
-            i++;
-        }
-        else
-        {
-            aux[k] = arr[j];
-            j++;
-        }
-        k++;
-    }
-
-    while (i <= medio)
-    {
-        aux[k] = arr[i];
-        i++;
-        k++;
-    }
-
-    while (j <= fin)
-    {
-        aux[k] = arr[j];
-        j++;
-        k++;
-    }
-
-    for (int p = inicio; p <= fin; p++)
-    {
-        arr[p] = aux[p];
-    }
+bool distanciaCritica(Punto p1, Punto p2, long long distancia) {
+    long long dx = p1.x - p2.x;
+    long long dy = p1.y - p2.y;
+    return (dx * dx + dy * dy) <= (distancia * distancia);
 }
 
-void mergeY(Punto *arr, Punto *aux, int inicio, int mitad, int fin)
-{
+void mergeX(Punto *puntos, Punto *aux, int inicio, int mitad, int fin) {
     int i = inicio;
     int j = mitad + 1;
     int k = inicio;
-
-    while (i <= mitad && j <= fin)
-    {
-        if (vaAntesY(arr[i], arr[j]))
-        {
-            aux[k] = arr[i];
-            i++;
+    while (i <= mitad && j <= fin) {
+        if (esMenorOIgualX(puntos[i], puntos[j])) {
+            aux[k++] = puntos[i++];
+        } else {
+            aux[k++] = puntos[j++];
         }
-        else
-        {
-            aux[k] = arr[j];
-            j++;
+    }
+    while (i <= mitad) aux[k++] = puntos[i++];
+    while (j <= fin) aux[k++] = puntos[j++];
+    for (int p = inicio; p <= fin; p++) puntos[p] = aux[p];
+}
+
+void mergeSortX(Punto *arr, Punto *aux, int inicio, int fin) {
+    if (inicio < fin) {
+        int mitad = inicio + (fin - inicio) / 2;
+        mergeSortX(arr, aux, inicio, mitad);
+        mergeSortX(arr, aux, mitad + 1, fin);
+        mergeX(arr, aux, inicio, mitad, fin);
+    }
+}
+
+void mergeY(Punto *arr, Punto *aux, int inicio, int mitad, int fin) {
+    int i = inicio, j = mitad + 1, k = inicio;
+    while (i <= mitad && j <= fin) {
+        if (esMenorOIgualY(arr[i], arr[j])) {
+            aux[k++] = arr[i++];
+        } else {
+            aux[k++] = arr[j++];
         }
-        k++;
     }
+    while (i <= mitad) aux[k++] = arr[i++];
+    while (j <= fin) aux[k++] = arr[j++];
+    for (int p = inicio; p <= fin; p++) arr[p] = aux[p];
+}
 
-    while (i <= mitad)
-    {
-        aux[k] = arr[i];
-        i++;
-        k++;
-    }
-
-    while (j <= fin)
-    {
-        aux[k] = arr[j];
-        j++;
-        k++;
-    }
-
-    for (int p = inicio; p <= fin; p++)
-    {
-        arr[p] = aux[p];
+void mergeSortY(Punto *arr, Punto *aux, int inicio, int fin) {
+    if (inicio < fin) {
+        int mitad = inicio + (fin - inicio) / 2;
+        mergeSortY(arr, aux, inicio, mitad);
+        mergeSortY(arr, aux, mitad + 1, fin);
+        mergeY(arr, aux, inicio, mitad, fin);
     }
 }
 
-void mergeSortY(Punto *arr, Punto *aux, int inicio, int fin)
-{
-    if (inicio >= fin)
-    {
-        return;
+void dividirPorID(Punto *puntosY, Punto *auxY, int inicio, int mitad, int fin) {
+    int izq = inicio;
+    int der = mitad + 1;
+    for (int p = inicio; p <= fin; p++) {
+        if (puntosY[p].id <= mitad) {
+            auxY[izq++] = puntosY[p];
+        } else {
+            auxY[der++] = puntosY[p];
+        }
     }
-
-    int mitad = inicio + (fin - inicio) / 2;
-
-    mergeSortY(arr, aux, inicio, mitad);
-    mergeSortY(arr, aux, mitad + 1, fin);
-
-    mergeY(arr, aux, inicio, mitad, fin);
+    for (int p = inicio; p <= fin; p++) {
+        puntosY[p] = auxY[p];
+    }
 }
 
-void mergeSortX(Punto *arr, Punto *aux, int inicio, int fin)
-{
-    if (inicio >= fin)
-    {
-        return;
-    }
-
-    int medio = inicio + (fin - inicio) / 2;
-
-    mergeSortX(arr, aux, inicio, medio);
-    mergeSortX(arr, aux, medio + 1, fin);
-
-    mergeX(arr, aux, inicio, medio, fin);
-}
-
-bool resolver(Punto *puntos, int inicio, int fin, long long D)
-{
-    int cantidad = fin - inicio + 1;
-
-    if (cantidad < 2)
-    {
-        return false;
-    }
-
-    if (cantidad == 2)
-    {
-        return calcularDistancia(puntos, inicio, fin, D);
-    }
-
-    int medio = inicio + (fin - inicio) / 2;
-    long long xMedio = puntos[medio].x;
-
-    if (resolver(puntos, inicio, medio, D))
-    {
-        return true;
-    }
-
-    if (resolver(puntos, medio + 1, fin, D))
-    {
-        return true;
-    }
-
-    Punto *banda = new Punto[cantidad];
+int construirBanda(Punto *puntosY, Punto *banda, int inicio, int fin, long long xMedio, long long D) {
     int tamBanda = 0;
-
-    for (int i = inicio; i <= fin; i++)
-    {
-        if (valorAbsoluto(puntos[i].x - xMedio) <= D)
-        {
-            banda[tamBanda] = puntos[i];
-            tamBanda++;
+    for (int p = inicio; p <= fin; p++) {
+        if (valorAbsoluto(puntosY[p].x - xMedio) <= D) {
+            banda[tamBanda++] = puntosY[p];
         }
     }
+    return tamBanda;
+}
 
-    if (tamBanda >= 2)
-    {
-        Punto *auxBanda = new Punto[tamBanda];
-
-        mergeSortY(banda, auxBanda, 0, tamBanda - 1);
-
-        for (int i = 0; i < tamBanda; i++)
-        {
-            int j = i + 1;
-
-            while (j < tamBanda && banda[j].y - banda[i].y <= D)
-            {
-                if (calcularDistancia(banda, i, j, D))
-                {
-                    delete[] banda;
-                    delete[] auxBanda;
-                    return true;
-                }
-
-                j++;
+bool analizarBanda(Punto *banda, int tamBanda, long long D) {
+    for (int p = 0; p < tamBanda; p++) {
+        int q = p + 1;
+        while (q < tamBanda && banda[q].y - banda[p].y <= D) {
+            if (distanciaCritica(banda[p], banda[q], D)) {
+                return true;
             }
+            q++;
         }
-
-        delete[] auxBanda;
     }
-
-    delete[] banda;
-
     return false;
 }
 
-bool existeParCritico(Punto *puntos, int N, long long D)
-{
-    if (N < 2)
-    {
-        return false;
+bool resolver(const Punto *puntosX, Punto *puntosY, Punto *auxY, Punto *banda, int inicio, int fin, long long distancia) {
+    if (inicio >= fin) return false;
+
+    int mitad = inicio + (fin - inicio) / 2;
+    long long xMedio = puntosX[mitad].x;
+
+    dividirPorID(puntosY, auxY, inicio, mitad, fin);
+
+    if (resolver(puntosX, puntosY, auxY, banda, inicio, mitad, distancia)){
+        return true;
+    }
+    if (resolver(puntosX, puntosY, auxY, banda, mitad + 1, fin, distancia)){
+        return true;
     }
 
-    Punto *aux = new Punto[N];
+    mergeY(puntosY, auxY, inicio, mitad, fin);
 
-    mergeSortX(puntos, aux, 0, N - 1);
+    int tamBanda = construirBanda(puntosY, banda, inicio, fin, xMedio, distancia);
 
-    delete[] aux;
-
-    return resolver(puntos, 0, N - 1, D);
+    return analizarBanda(banda, tamBanda, distancia);
 }
 
-int main()
-{
+bool existeParCritico(Punto *puntos, int N, long long D) {
+    if (N < 2) return false;
+
+    Punto *auxGlobal = new Punto[N];
+    Punto *banda = new Punto[N];
+
+    Punto *puntosX = puntos; 
+    mergeSortX(puntosX, auxGlobal, 0, N - 1);
+    for (int i = 0; i < N; i++) {
+        puntosX[i].id = i;
+    }
+
+    Punto *puntosY = new Punto[N];
+    for (int i = 0; i < N; i++) {
+        puntosY[i] = puntosX[i];
+    }
+    mergeSortY(puntosY, auxGlobal, 0, N - 1);
+
+    bool resultado = resolver(puntosX, puntosY, auxGlobal, banda, 0, N - 1, D);
+
+    delete[] puntosY;
+    delete[] auxGlobal;
+    delete[] banda;
+
+    return resultado;
+}
+
+int main() {
     int N;
     long long D;
+    
+    if (cin >> N >> D) {
+        Punto *puntos = new Punto[N]; 
+        for (int i = 0; i < N; i++) {
+            cin >> puntos[i].x >> puntos[i].y;
+        }
 
-    cin >> N >> D;
-    Punto *puntos = new Punto[N];
+        if (existeParCritico(puntos, N, D)) {
+            cout << "true\n";
+        } else {
+            cout << "false\n";
+        }
 
-    for (int i = 0; i < N; i++)
-    {
-        cin >> puntos[i].x >> puntos[i].y;
+        delete[] puntos; 
     }
-
-    bool respuesta = existeParCritico(puntos, N, D);
-
-    if (respuesta)
-    {
-        cout << "true" << '\n';
-    }
-    else
-    {
-        cout << "false" << '\n';
-    }
-
-    delete[] puntos;
-
+    
     return 0;
 }
