@@ -65,6 +65,7 @@
   hasta que quede un solo archivo.
 
 ## 2026-10-09 — Bruno Rosa
+- Ej 3 quedo terminado y todas las preubas pasaron
 - Volvi a ver la grabación de cuando presentan el obligatorio y vi la explicación del ej4 nuevamente.
 - Empecé el ejercicio 4, estuve evaluando si el tad que ya tenia de Min Heap del ej3 me servia y ademas 
 evalue si realizar un tad de grafos como el de la clase 6 para el manejo de dependencias de los modulos.
@@ -90,6 +91,7 @@ evalue si realizar un tad de grafos como el de la clase 6 para el manejo de depe
   ejercicio 3, que depende de que guarde un long long.
 
 ## 2026-10-13 — Bruno Rosa
+- Ej 4 quedo terminado y todas las pruebas corrieron con exito.
 - Comence a pensar el ejercicio 5 , cree el tad MFset.cpp y pase a crear las firmas de las funciones
   que creo que necesitaré para el ejercicio.
 - Evalue si debía crear otro tad maás, pero noté que el tad MinHeapPar.cpp ya me sirve para reutilizarlo en 
