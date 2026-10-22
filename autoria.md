@@ -1,7 +1,6 @@
 # Declaración de autoría — Obligatorio 1
 
 ## Ejercicio 1
-- Implementación íntegramente propia, sin fuentes externas.
 - El TAD ArbolAVL AvlImp.cpp esta basado en el patron de insercion recursiva,
   las rotaciones (simples y dobles) y el manejo del campo altura visto en
   01_avl_insercion.cpp (material de la primera clase de AVL, clase-01-avl-main).
@@ -11,7 +10,6 @@
   este ejercicio puntual. Lo evalue y decidi dejarlo asi.
 
 ## Ejercicio 2
-- Implementación íntegramente propia, sin fuentes externas a lo visto en clase.
 - Para hacer el TAD OpenHash (tads/OpenHash.cpp) me basé en lo visto en el curso
   y en parte en clase-02-hash-cerrado-main. Aunque es hash cerrado, me sirvió
   para estas partes: esPrimo y primoSup, el constructor con "esperados", la
@@ -36,7 +34,11 @@
   porque entre los módulos listos tengo que sacar primero el de menor prioridad
   y, si empatan, el de menor número. Además guardo el orden en un arreglo y
   comparo cuántos salieron con V para detectar el ciclo e imprimir "imposible".
-- TAD Grafo (tads/Graph.cpp) basado en Grafo.h de la clase 6.
+- TAD Grafo (tads/Graph.cpp) basado en Grafo.h de la clase 6 (clase-06-kahn-main):
+  la clase Arista, la lista de adyacencia GrafoLA, agregarArista con inserción
+  al inicio y vecinosNodo. Adaptado: quité el costo de la arista y la búsqueda de
+  repetidos (para que agregar sea O(1)), usé n + 1 posiciones para numerar los
+  nodos desde 1 y agregué el destructor.
 - TAD MinHeapPar (tads/MinHeapPar.cpp) basado en el Heap de la clase 4
   (clase-04-multiestructura, main.cpp). Adaptado, de máximo a mínimo, con un par
   (prioridad, número) en lugar del ticket y con flotar y hundir con while.
@@ -46,7 +48,11 @@
     Decidí hacer un heap de pares (ver bitácora del 2026-10-10).
 
 ## Ejercicio 5
-- Algoritmo de Kruskal visto en la clase 7 (clase-07-kruskal-main).
+- Algoritmo de Kruskal basado en kruskal.cpp de la clase 7 (clase-07-kruskal-main):
+  el bucle que saca el sendero mínimo, une los extremos si no cierra ciclo y corta
+  al tener V - 1 senderos. Adaptado: el heap guarda (costo, número de sendero) y
+  origen y destino van en dos arreglos, el costo total es long long y agregué el
+  caso V = 1 y la salida "imposible".
 - TAD MFSet (tads/MFset.cpp) basado en MFSet.h de la clase 7. Adaptado: la
   unión pasa de por tamaño a por altura, los elementos se numeran desde 1 y
   se agregó el destructor.
