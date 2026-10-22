@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// Bucle de Kruskal basado en kruskal.cpp de la clase 7 (clase-07-kruskal-main).
+
 int main()
 {
     int V, E;

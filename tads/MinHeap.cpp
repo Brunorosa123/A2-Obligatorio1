@@ -3,6 +3,7 @@
 
 #include <iostream>
 using namespace std;
+// Basado en 01_minheap.cpp de la clase 3 (clase-03-heap-main), con long long.
 
 class MinHeap {
 private:

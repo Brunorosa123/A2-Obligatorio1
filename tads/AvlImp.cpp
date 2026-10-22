@@ -15,7 +15,8 @@ struct NodoAVL {
         der = NULL;
     }
 };
-
+// Basado en 01_avl_insercion.cpp de la clase de AVL (clase-01-avl-main):
+// inserción recursiva, rotaciones y campo altura.
 template <class T>
 class ArbolAVL {
     private:

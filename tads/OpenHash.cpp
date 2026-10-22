@@ -2,6 +2,9 @@
 #include <string>
 using namespace std;
 
+// Basado en clase-02-hash-cerrado-main: esPrimo, primoSup, constructor con
+// "esperados", función de hash, cantidadElementos y destructor.
+// Adaptado a hash abierto con una lista enlazada por posición.
 class HashAbierto {
     private:
         class NodoHash {

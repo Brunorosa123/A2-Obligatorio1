@@ -4,6 +4,9 @@
 #include <iostream>
 using namespace std;
 
+// Basado en el Heap de la clase 4 (clase-04-multiestructura): de máximo a
+// mínimo, con un par (prioridad, número).
+
 struct Nodo {
     int prioridad;
     int numero;

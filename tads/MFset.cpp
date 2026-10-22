@@ -4,6 +4,9 @@
 #include <iostream>
 using namespace std;
 
+// Basado en MFSet.h de la clase 7 (clase-07-kruskal-main). Adaptado: unión por
+// altura, elementos desde 1 y destructor.
+
 class MFSet {
 private:
     int* padre; 

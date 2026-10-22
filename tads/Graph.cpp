@@ -3,7 +3,8 @@
 
 #include <iostream>
 using namespace std;
-
+// Basado en Grafo.h de la clase 6 (clase-06-kahn-main). Adaptado: sin costo,
+// sin búsqueda de repetidos, n + 1 posiciones y destructor.
 class Arista {
 public:
     int destino;
