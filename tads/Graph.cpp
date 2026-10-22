@@ -41,6 +41,7 @@ class GrafoLA{
             nuevaA->sig = listaAdyacencia[origen];
             listaAdyacencia[origen] = nuevaA;
         }
+        
         Arista* vecinosNodo(int nodo) {
         return this->listaAdyacencia[nodo];
     }

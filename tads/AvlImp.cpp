@@ -1,17 +1,6 @@
 #ifndef AVL_CPP
 #define AVL_CPP
 
-// TAD Arbol AVL generico (parametrizado por el tipo de la clave).
-// Se instancia una vez por coleccion: ArbolAVL<long long> y ArbolAVL<string>.
-//
-// Requisitos sobre T: debe tener operator< y ser copiable (los tipos
-// long long y std::string lo cumplen). Los parametros se pasan por valor,
-// igual que en el codigo de clase (01_avl_insercion.cpp).
-//
-// Ordenes (K = cantidad de claves en el arbol, R = claves reportadas):
-//   insertar  -> O(log K)
-//   pertenece -> O(log K)
-//   rango     -> O(log K + R)
 template <class T>
 struct NodoAVL {
     T dato;
@@ -92,10 +81,7 @@ class ArbolAVL {
             }
             return nodo;
         }
-// Consulté con Claude para entender la sintaxis de puntero a función
-// (void (*visitar)(const T&)) porque nunca la había usado. También le
-// pregunté si había otras formas de escribirlo (typedef, std::function),
-// pero decidí dejar esta misma porque es la que traía el código base.
+        
         void rango(NodoAVL<T>* nodo, T desde, T hasta,
                    void (*visitar)(const T&)) {
             if (nodo == NULL) return;

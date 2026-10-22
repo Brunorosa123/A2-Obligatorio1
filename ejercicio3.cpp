@@ -2,13 +2,7 @@
 #include "tads/MinHeap.cpp"
 using namespace std;
 
-
-// Tiempo: N inserciones + (N-1) iteraciones con 2 eliminaciones y 1 inserción,
-// todas O(log N) => O(N log N). Espacio: O(N) (el heap nunca supera N elementos).
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-
     int n;
     cin >> n;
 

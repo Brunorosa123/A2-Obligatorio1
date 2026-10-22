@@ -1,18 +1,11 @@
 # Justificación de órdenes — Obligatorio 1
 
-> **Instrucciones** (borrar esta sección antes de entregar): para cada ejercicio cuya
-> letra plantea restricciones de órdenes (tiempo o espacio), justificar brevemente por
-> qué la solución cumple, indicando qué estructuras de datos o algoritmos se utilizaron.
-> Ejemplo: "La letra exige inserción en O(log n); usamos un min-heap sobre arreglo,
-> donde flotar/hundir recorren a lo sumo la altura del árbol". Si un ejercicio no tiene
-> restricciones de órdenes, indicarlo.
-
 ## Ejercicio 1
 - La letra exige ALTA y BUSCAR en O(log K) y RANGO en O(log K + R), siendo K
   la cantidad de piezas registradas en la colección consultada y R la
   cantidad de piezas reportadas.
 - Usé un árbol AVL (ArbolAVL<T>), instanciado una vez para monedas
-  (long long) y otra para pinturas (string), como pide la letra: un
+  (long long) y otra para pinturas (string), como pide la letra, un
   único TAD, sin implementación distinta por colección. Al mantenerse
   balanceado (con rotaciones simples y dobles tras cada inserción), la
   altura del árbol queda en O(log K). ALTA y BUSCAR bajan por un único
@@ -26,7 +19,7 @@
   O(log K + R) en total.
 
 ## Ejercicio 2
-- Usé una tabla de hash abierta : un arreglo
+- Usé una tabla de hash abierta , un arreglo
   de buckets donde cada bucket es una lista enlazada de nodos con clave y
   contador. La clave de un cajón es un string de 26 caracteres con la cantidad
   de veces que aparece cada letra (obtenerClave). Dos palabras se componen con
@@ -87,8 +80,71 @@
   superar los 32 bits.
 
 ## Ejercicio 4
-- Sin restricciones de órdenes. / Justificación: ...
+- Usé el algoritmo de Kahn visto en la clase 6, con un heap de mínimos
+  (MinHeapPar) y una lista de adyacencia (GrafoLA). Sirve Kahn porque cada módulo
+  lleva la cuenta de las dependencias que le faltan (su grado de entrada). Cuando llega a 0 el módulo
+  está listo, y si hay un ciclo esos módulos nunca llegan a 0, así que detecto el
+  ciclo comparando cuántos salieron con V.
+- Para elegir el próximo módulo uso un heap, porque sacar el mínimo de los
+  listos cuesta O(log V). Recorrer todos los listos en cada paso sería O(V) por
+  paso y O(V²) en total. El heap guarda pares (prioridad, número) porque el orden
+  tiene dos criterios: primero la menor prioridad y, si empatan, el menor número.
+  El "MinHeap" del ejercicio 3 guarda un solo "long long" y no sirve para eso, así
+  que hice un heap nuevo para no tocar el del ejercicio 3.
+- Representé el grafo con una lista de adyacencia y no con una matriz, porque una 
+  matriz de V x V ocuparía O(V²) de espacio, mucho más que el O(V + A) que se pide.
+- Armar el grafo: leer las prioridades es O(V). Por cada dependencia agrego la
+  arista al inicio de la lista del origen (O(1), sin recorrer la lista) y sumo
+  uno al grado del destino. Si la agregara al final, tendría que recorrer la
+  lista cada vez y se me iría de orden. En total son O(V + A).
+- Al principio meto al heap los módulos con grado 0, son a lo sumo V inserciones
+  de O(log V).
+- El heap es un árbol con los elementos en posiciones seguidas del arreglo, así
+  que su altura es O(log V). Flotar y hundir suben o bajan de a un nivel, por lo
+  que insertar y sacar son O(log V).
+- Bucle principal: cada módulo entra al heap una sola vez (cuando su grado llega a
+  0, y el grado solo baja) y sale una sola vez, así que son a lo sumo V entradas y
+  V salidas de O(log V): O(V log V). Al sacar un módulo recorro su lista de
+  dependientes, y como cada arista está en la lista de un solo origen, recorro
+  cada arista una sola vez en todo el programa: O(A).
+- Guardo el orden en un arreglo y no lo imprimo a medida que sale, porque si hay
+  un ciclo la letra pide imprimir solo "imposible" y ningún módulo. Al final
+  comparo "cantOrden" con V (O(1)): si son iguales imprimo los V módulos (O(V)),
+  y si no, "imposible".
+- Total de tiempo: O(V + A) + O(V log V) = O((V + A) log V).
+- Espacio: la lista de adyacencia (V + 1 punteros y A aristas), tres arreglos de
+  tamaño V y el heap de capacidad V. En total O(V + A).
 
 ## Ejercicio 5
-- Sin restricciones de órdenes. / Justificación: ...
-
+- Usé Kruskal con un heap (MinHeapPar), que guarda (costo, número de sendero),
+  y conjuntos disjuntos MFSet. Elegí el heap porque Kruskal necesita recorrer
+  los senderos del más barato al más caro, y con el heap solo extraigo los que
+  necesito, siempre el menor en O(log E), porque corto al tener V - 1 senderos
+  elegidos.
+- Con V = 1 imprimo 0 sin hacer nada más, en O(1).
+- Leer los E senderos: guardo origen y destino en dos arreglos indexados por el
+  número de sendero, y meto (costo, número) al heap. Son E inserciones de
+  O(log E): O(E log E).
+- Bucle principal: saco senderos del heap de a uno, como mucho E extracciones de
+  O(log E): O(E log E). Corto apenas tengo V - 1 senderos elegidos, porque un
+  árbol que conecta V refugios tiene exactamente V - 1. En el peor caso igual
+  extraigo los E (por ejemplo, si el grafo no es conexo), así que el orden no
+  cambia: el corte solo evita trabajo de más.
+- Por cada sendero uso unir, que pregunta si los extremos ya están conectados
+  y, si no, los junta. Uso las dos optimizaciones que pide la letra:
+  compresión de caminos (al buscar el representante, todo el camino queda
+  colgando de la raíz) y unión por altura (el árbol más bajo cuelga del más
+  alto). Con las dos, la altura de los árboles es O(log V) y cada operación
+  cuesta casi O(1), así que no agrega orden por encima del heap.
+- Crear el MFSet cuesta O(V). Cuando el grafo es conexo,  así que ese
+  costo queda dentro de O(E); si el grafo no tiene senderos suficientes para
+  conectar a todos, la respuesta es "imposible" y ese costo es lo único que
+  queda por encima de la lectura de los E senderos.
+- Total de tiempo: O(E log E) por las inserciones y las extracciones del heap,
+  más casi O(E) por las operaciones del MFSet y O(V) por crearlo. En todos los
+  casos con solución, O(E log E).
+- Espacio: el heap (capacidad E), los arreglos de origen y destino (E cada uno)
+  y el MFSet (dos arreglos de V + 1). La recursión de "representante" usa una
+  pila de O(log V), por la altura de los árboles. En total O(V + E).
+- El costo total lo acumulo en un long long, porque con hasta 10^5 refugios y
+  costos de hasta 10^6 la suma puede superar los 32 bits.

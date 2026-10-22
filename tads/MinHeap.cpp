@@ -6,16 +6,16 @@ using namespace std;
 
 class MinHeap {
 private:
-    long long* datos;
+    long long* datos;     
     int cantidad;
     int capacidad;
 
     int padre(int pos) {
-        return pos/ 2;
+        return pos / 2;
     }
 
     int hijoIzquierdo(int pos) {
-        return  pos *2 ;
+        return 2 * pos;
     }
 
     int hijoDerecho(int pos) {
@@ -29,18 +29,18 @@ private:
     }
 
     void flotar(int pos) {
-        while (pos > 0 && datos[pos] < datos[padre(pos)]) {
+        while (pos > 1 && datos[pos] < datos[padre(pos)]) {
             intercambiar(pos, padre(pos));
             pos = padre(pos);
         }
     }
 
     void hundir(int pos) {
-        while (hijoIzquierdo(pos) < cantidad) {
+        while (hijoIzquierdo(pos) <= cantidad) {
 
             int hijoMenor = hijoIzquierdo(pos);
 
-            if (hijoDerecho(pos) < cantidad &&
+            if (hijoDerecho(pos) <= cantidad &&
                 datos[hijoDerecho(pos)] < datos[hijoIzquierdo(pos)]) {
 
                 hijoMenor = hijoDerecho(pos);
@@ -59,7 +59,7 @@ public:
     MinHeap(int capacidad) {
         this->capacidad = capacidad;
         this->cantidad = 0;
-        this->datos = new long long[capacidad];
+        this->datos = new long long[capacidad + 1];  
     }
 
     ~MinHeap() {
@@ -79,9 +79,9 @@ public:
             return;
         }
 
+        cantidad++;
         datos[cantidad] = valor;
         flotar(cantidad);
-        cantidad++;
     }
 
     long long obtenerMinimo() {
@@ -90,7 +90,7 @@ public:
             return -1;
         }
 
-        return datos[0];
+        return datos[1];
     }
 
     long long eliminarMinimo() {
@@ -99,13 +99,13 @@ public:
             return -1;
         }
 
-        long long minimo = datos[0];
+        long long minimo = datos[1];
 
-        datos[0] = datos[cantidad - 1];
+        datos[1] = datos[cantidad];
         cantidad--;
 
         if (cantidad > 0) {
-            hundir(0);
+            hundir(1);
         }
 
         return minimo;
