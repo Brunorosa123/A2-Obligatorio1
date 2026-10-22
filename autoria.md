@@ -59,5 +59,7 @@
 - Reutilicé el MinHeapPar del ejercicio 4 (costo en "prioridad", número de
   sendero en "numero").
 - Uso de IA : me ayudo a entender el plan del ejercicio y corregirme algunos detalles del
-main que no me dejaba pasar todas las pruebas.
+  main que no me dejaba pasar todas las pruebas. Además una revisión me señaló que crear el MFSet 
+  antes de leer los senderos rompía O(E log E) cuando E << V, entonces agregué el chequeo E < V - 1 para 
+  imprimir imposible antes de crearlo.
 

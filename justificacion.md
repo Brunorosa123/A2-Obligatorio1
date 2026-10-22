@@ -121,6 +121,8 @@
   necesito, siempre el menor en O(log E), porque corto al tener V - 1 senderos
   elegidos.
 - Con V = 1 imprimo 0 sin hacer nada más, en O(1).
+- Si E < V - 1 imprimo "imposible" sin crear nada, en O(1): con menos de V - 1
+  senderos no se puede conectar a todos los refugios, aunque se usen todos.
 - Leer los E senderos: guardo origen y destino en dos arreglos indexados por el
   número de sendero, y meto (costo, número) al heap. Son E inserciones de
   O(log E): O(E log E).
@@ -135,13 +137,12 @@
   colgando de la raíz) y unión por altura (el árbol más bajo cuelga del más
   alto). Con las dos, la altura de los árboles es O(log V) y cada operación
   cuesta casi O(1), así que no agrega orden por encima del heap.
-- Crear el MFSet cuesta O(V). Cuando el grafo es conexo hay al menos V - 1
-  senderos, o sea E >= V - 1, así que ese costo queda dentro de O(E), si el grafo no tiene senderos suficientes para
-  conectar a todos, la respuesta es "imposible" y ese costo es lo único que
-  queda por encima de la lectura de los E senderos.
+- Crear el MFSet cuesta O(V). Como antes ya descarté el caso E < V - 1, llegado
+  este punto E >= V - 1, o sea V <= E + 1, así que ese costo queda dentro de
+  O(E) y no agrega orden por encima de la lectura de los E senderos.
 - Total de tiempo: O(E log E) por las inserciones y las extracciones del heap,
-  más casi O(E) por las operaciones del MFSet y O(V) por crearlo. En todos los
-  casos con solución, O(E log E).
+  más casi O(E) por las operaciones del MFSet y O(V) = O(E) por crearlo. En
+  todos los casos, O(E log E).
 - Espacio: el heap (capacidad E), los arreglos de origen y destino (E cada uno)
   y el MFSet (dos arreglos de V + 1). La recursión de "representante" usa una
   pila de O(log V), por la altura de los árboles. En total O(V + E).

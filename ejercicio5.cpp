@@ -17,8 +17,15 @@ int main()
         cout << 0 << "\n";
         return 0;
     }
+// Chequeo ugerido por IA: si E < V - 1 es imposible conectar, y evito crear el MFSet (O(V))
+// , lo entendí y decidi dejarlo.
+    if (E < V - 1)
+    {
+        cout << "imposible\n";
+        return 0;
+    }
 
-    MinHeapPar *heap = new MinHeapPar(E); 
+    MinHeapPar *heap = new MinHeapPar(E);
     MFSet *conjuntos = new MFSet(V);
     int *origen = new int[E];  
     int *destino = new int[E]; 
