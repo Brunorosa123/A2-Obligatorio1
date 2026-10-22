@@ -70,7 +70,7 @@ public:
         return cantidad == 0;
     }
 
-    int tamaño() {
+    int tamanio() {
         return cantidad;
     }
 

@@ -51,7 +51,7 @@
   corta en 10 como en clase, porque todas las posiciones distinguen un
   cajón de otro; si no, cajones que difieren solo al final colisionarían. 
 - Decisión: tabla de largo primo >= 1,5·N, así el factor de carga no pasa de
-  ~0,67 (rango sano 0,5~0,7 de las diapositivas) y no hace falta rehash. Esto me lo
+  aprox 0,67 (rango sano 0,5 a 0,7 de las diapositivas) y no hace falta rehash. Esto me lo
   aconsejo la IA y opte por dejalo al haberlo analisado
 - El cajón más grande lo voy actualizando en main con el contador que
   devuelve cada registro, para que la última línea sea O(1).  
@@ -84,7 +84,7 @@ evalue si realizar un tad de grafos como el de la clase 6 para el manejo de depe
     trabajo y más difícil de explicar.
 - Decidí hacer un heap nuevo de pares porque expresa las dos reglas de la letra directamente 
   como un "if" de dos pasos, sin cuentas que explicar. Me baso en el Heap de la clase 4
-  (clase-04-multiestructura), que ya desempata por un segundo campo; lo adapté
+  (clase-04-multiestructura), que ya desempata por un segundo campo, lo adapté
   de máximo a mínimo y reemplacé el ticket por un par (prioridad, módulo).
 - Lo hice en un archivo aparte y no modifiqué MinHeap.cpp para no romper el
   ejercicio 3, que depende de que guarde un long long.

@@ -81,7 +81,8 @@ class ArbolAVL {
             }
             return nodo;
         }
-        
+         // El parámetro 'visitar' (puntero a función) para no imprimir adentro del
+        // TAD fue sugerido por IA. La poda del recorrido es propia.
         void rango(NodoAVL<T>* nodo, T desde, T hasta,
                    void (*visitar)(const T&)) {
             if (nodo == NULL) return;

@@ -16,7 +16,7 @@ int main() {
 
     long long costoTotal = 0;
 
-    while (heap->tamaño() > 1) {
+    while (heap->tamanio() > 1) {
         long long a = heap->eliminarMinimo();
         long long b = heap->eliminarMinimo();
         long long nuevo = a + b;

@@ -12,6 +12,11 @@
 
 ## Ejercicio 2
 - Implementación íntegramente propia, sin fuentes externas a lo visto en clase.
+- Para hacer el TAD OpenHash (tads/OpenHash.cpp) me basé en lo visto en el curso
+  y en parte en clase-02-hash-cerrado-main. Aunque es hash cerrado, me sirvió
+  para estas partes: esPrimo y primoSup, el constructor con "esperados", la
+  función de hash, cantElementos con cantidadElementos() y el destructor. 
+  Lo adapté a hash abierto con una lista enlazada por posición, según las diapositivas de Tablas de Hash.
 - Uso de IA: me aconsejó dimensionar la tabla con un
   largo primo >= 1,5·N para mantener el factor de carga en ~0,67 sin rehash.
   Lo analicé y decidí dejarlo 
@@ -22,7 +27,8 @@
 - pase de int a long long porque el costo total puede superar 32 bits.
 - Cambié las fórmulas de padre, hijo izquierdo e hijo derecho respecto de
   clase en base 1 ya que así me resulta mejor para entenderlo.
-- Sin uso de IA para algo de implementación
+- Uso de IA: me señaló que mis fórmulas eran de base 1 sobre un arreglo
+  que arrancaba en 0 y me pasó la versión corregida, que revisé y apliqué.
 
 ## Ejercicio 4
 - Algoritmo de Kahn basado en kahn.cpp de la clase 6 (clase-06-kahn-main).
@@ -46,5 +52,6 @@
   se agregó el destructor.
 - Reutilicé el MinHeapPar del ejercicio 4 (costo en "prioridad", número de
   sendero en "numero").
-- Uso de IA : me ayudo a entender el plan del ejercicio.
+- Uso de IA : me ayudo a entender el plan del ejercicio y corregirme algunos detalles del
+main que no me dejaba pasar todas las pruebas.
 

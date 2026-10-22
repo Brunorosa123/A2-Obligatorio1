@@ -37,7 +37,7 @@
     factor de carga).
   - Insertar un nodo nuevo es agregarlo al inicio del bucket: O(1).
   Total O(L) promedio. Es promedio y no peor caso porque, si todas las claves
-  cayeran en el mismo bucket, una operación costaría O(N); asumo que el hash
+  cayeran en el mismo bucket, una operación costaría O(N), asumo que el hash
   dispersa bien las claves.
 - Factor de carga: creo la tabla con un largo primo
   ≥ 1,5·N. Como leo N antes de registrar nada, puedo dimensionarla de entrada.
@@ -57,9 +57,8 @@
 
 ## Ejercicio 3
 - Usé un Min Heap sobre un arreglo de long long con capacidad N. 
-  Lo elegí porque en cada paso necesito sacar
-  los dos archivos más chicos y volver a meter el nuevo; con un arreglo
-  ordenado cada inserción costaría O(N) y el total O(N²).
+  Lo elegí porque en cada paso necesito sacar los dos archivos más chicos y volver a meter el nuevo, 
+  con un arreglo ordenado cada inserción costaría O(N) y el total O(N^2).
 - "insertar": pone el valor al final y lo hace flotar. Sube de a un nivel por
   iteración, a lo sumo la altura del heap: O(log N).
 - "eliminarMinimo": lleva el último elemento a la raíz y lo hace hundir. Baja de
@@ -136,8 +135,8 @@
   colgando de la raíz) y unión por altura (el árbol más bajo cuelga del más
   alto). Con las dos, la altura de los árboles es O(log V) y cada operación
   cuesta casi O(1), así que no agrega orden por encima del heap.
-- Crear el MFSet cuesta O(V). Cuando el grafo es conexo,  así que ese
-  costo queda dentro de O(E); si el grafo no tiene senderos suficientes para
+- Crear el MFSet cuesta O(V). Cuando el grafo es conexo hay al menos V - 1
+  senderos, o sea E >= V - 1, así que ese costo queda dentro de O(E), si el grafo no tiene senderos suficientes para
   conectar a todos, la respuesta es "imposible" y ese costo es lo único que
   queda por encima de la lectura de los E senderos.
 - Total de tiempo: O(E log E) por las inserciones y las extracciones del heap,
